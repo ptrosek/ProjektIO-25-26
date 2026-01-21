@@ -20,10 +20,14 @@
                 <td>{{ app.appointment_request.date }}</td>
                 <td>{{ app.appointment_request.start_time }}</td>
                 <td>
-                    {% if app.status_info %}
-                        {{ app.status_info.get_status_display }}
+                    {% if app.paid %}
+                        <span class="badge bg-success">Paid</span>
                     {% else %}
-                        <span class="text-muted">Unknown</span>
+                        {% if app.amount_to_pay == 0 %}
+                             <span class="badge bg-success">Confirmed</span>
+                        {% else %}
+                             <span class="badge bg-warning text-dark">Payment Due: {{ app.amount_to_pay }}</span>
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>
