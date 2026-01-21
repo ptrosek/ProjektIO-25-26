@@ -122,3 +122,7 @@ APPOINTMENT_CONFIG = {
     'appointment_lead_time': (9, 0),
     'appointment_finish_time': (17, 0),
 }
+
+MIGRATION_MODULES = {
+    'appointment': 'core_fitness.migrations_appointment',
+}

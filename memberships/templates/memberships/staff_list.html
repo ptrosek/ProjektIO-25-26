@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Pending Memberships</h2>
+
+{% if memberships %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Date Requested</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in memberships %}
+            <tr>
+                <td>{{ m.user.username }} ({{ m.user.email }})</td>
+                <td>{{ m.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    <form method="post" action="{% url 'update_membership_status' m.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="approve">
+                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                    </form>
+                    <form method="post" action="{% url 'update_membership_status' m.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="reject">
+                        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No pending memberships.</p>
+{% endif %}
+{% endblock %}

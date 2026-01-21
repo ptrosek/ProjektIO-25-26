@@ -26,6 +26,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'my_bookings' %}">My Bookings</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'request_membership' %}">Membership</a>
+            </li>
             {% endif %}
           </ul>
           <ul class="navbar-nav">
@@ -33,11 +36,18 @@
                 <li class="nav-item">
                      <span class="nav-link active">Hello, {{ user.first_name|default:user.username }}</span>
                 </li>
-                 <li class="nav-item">
-                    {% if user.is_staff %}
-                        <a class="nav-link" href="/admin/">Admin</a>
-                    {% endif %}
-                </li>
+                 {% if user.is_staff %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="staffDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Staff Area
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="staffDropdown">
+                          <li><a class="dropdown-item" href="{% url 'staff_membership_list' %}">Manage Memberships</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="/admin/">Django Admin</a></li>
+                        </ul>
+                    </li>
+                 {% endif %}
                  <li class="nav-item">
                    <form action="{% url 'admin:logout' %}" method="post" class="d-inline">
                        {% csrf_token %}

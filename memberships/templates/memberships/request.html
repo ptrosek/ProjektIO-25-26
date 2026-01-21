@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Request Membership</h2>
+
+{% if existing %}
+    <div class="alert alert-info">
+        You already have a membership status: <strong>{{ existing.get_status_display }}</strong>.
+    </div>
+{% else %}
+    <p>Click the button below to request membership.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Request Membership</button>
+    </form>
+{% endif %}
+{% endblock %}
