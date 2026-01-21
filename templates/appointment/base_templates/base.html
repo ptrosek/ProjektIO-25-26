@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% block title_inner %}Appointments{% endblock %}
+{% endblock %}
+
+{% block custom_css %}
+    <!-- Appointment Custom CSS block mapped to our base custom_css -->
+    {% block customCSS %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <!-- Map Appointment's 'body' block to our 'content' block -->
+    {% block body %}{% endblock %}
+{% endblock %}
+
+{% block custom_js %}
+    {% block customJS %}{% endblock %}
+{% endblock %}

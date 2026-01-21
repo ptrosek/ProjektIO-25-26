@@ -1,0 +1,13 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django<6.0",
+    "django-appointment>=3.9.0",
+    "django-phonenumber-field>=8.0.0",
+    "icalendar>=6.3.2",
+    "psycopg2-binary>=2.9.11",
+]

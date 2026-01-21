@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 text-center my-5">
+        <h1 class="display-4">Welcome to Studio Fitness</h1>
+        <p class="lead">Book your classes and training sessions seamlessly.</p>
+    </div>
+</div>
+
+<div class="row">
+    {% if services %}
+        {% for service in services %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if service.image %}
+                    <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <div class="bg-secondary text-white d-flex justify-content-center align-items-center" style="height: 200px;">
+                        <span class="h3">{{ service.name|slice:":2" }}</span>
+                    </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ service.name }}</h5>
+                    <p class="card-text text-muted">
+                        {{ service.get_duration }} | 
+                        {% if service.price == 0 %}
+                            <span class="badge bg-success">Free</span>
+                        {% else %}
+                            {{ service.price }} {{ service.currency }}
+                        {% endif %}
+                    </p>
+                    {% if service.description %}
+                        <p class="card-text">{{ service.description|truncatewords:20 }}</p>
+                    {% endif %}
+                    
+                    <div class="mt-auto">
+                        <a href="{% url 'appointment:appointment_request' service.id %}" class="btn btn-primary w-100">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12 text-center">
+            <div class="alert alert-info">
+                No services are currently available. Please check back later.
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
