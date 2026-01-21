@@ -89,8 +89,28 @@ uv run python manage.py createsuperuser
 
 Then navigate to `http://localhost:8000/admin` and log in.
 
+### Seeding the Database
+To populate the database with initial test data (Staff, Services, Users), you can use the custom `seed_studio` command.
+
+**Docker:**
+```bash
+docker-compose exec web uv run python manage.py seed_studio
+```
+
+**Local:**
+```bash
+uv run python manage.py seed_studio
+```
+
+This command creates the following:
+*   **App Configuration**: Default appointment settings.
+*   **Service**: "Personal Training" (60 mins, $100).
+*   **Users**:
+    *   **Admin**: `admin` / `adminpass`
+    *   **Staff**: `alice` / `staffpass` (Alice Instructor)
+    *   **Client**: `bob` / `clientpass` (Bob Client)
+
 ### Configuration
 Key settings are located in `config/settings.py`.
 *   **Databases**: Configured to use `db.sqlite3` by default.
 *   **Appointment Config**: Custom settings for `django-appointment` can be found in `APPOINTMENT_CONFIG`.
-
