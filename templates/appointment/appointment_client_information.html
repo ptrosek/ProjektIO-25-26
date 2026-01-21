@@ -16,6 +16,20 @@
         <form class="appointment-form" method="POST" action="{% url 'appointment:appointment_client_information' ar.id ar.id_request %}">
             {% csrf_token %}
             
+            {% if form.errors or client_data_form.errors %}
+            <div class="alert alert-danger">
+                <h5>Please correct the errors below:</h5>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        <li>{{ field }}: {{ errors|join:", " }}</li>
+                    {% endfor %}
+                    {% for field, errors in client_data_form.errors.items %}
+                        <li>{{ field }}: {{ errors|join:", " }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-white">
                     <h4 class="mb-0">{% trans "Fill out your details" %}</h4>
@@ -98,6 +112,9 @@
                     <hr>
 
                     {% if ar.is_a_paid_service %}
+                        <!-- Fallback hidden input for payment_type if button value is lost -->
+                        <input type="hidden" name="payment_type" value="full"> 
+                        
                         {% if APPOINTMENT_PAYMENT_URL %}
                              <div class="d-flex justify-content-between mb-3">
                                 <h5>{% trans "Total" %}</h5>
@@ -115,6 +132,7 @@
                              <button type="submit" class="btn btn-primary btn-lg w-100" name="payment_type" value="full">{% trans "Finish" %}</button>
                         {% endif %}
                     {% else %}
+                         <input type="hidden" name="payment_type" value="full">
                          <button type="submit" class="btn btn-primary btn-lg w-100" name="payment_type" value="full">{% trans "Finish" %}</button>
                     {% endif %}
                 </div>
